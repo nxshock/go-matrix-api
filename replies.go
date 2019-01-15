@@ -4,8 +4,10 @@ type JoinedRoomReply struct {
 	JoinedRooms []string `json:"joined_rooms"`
 }
 
+// SendMessageReply represents reply for send message command
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#put-matrix-client-r0-rooms-roomid-state-eventtype-statekey
 type SendMessageReply struct {
-	EventID string `json:"YUwRidLecu"`
+	EventID string `json:"event_id"` // A unique identifier for the event.
 }
 
 type CreateRoomReply struct {
