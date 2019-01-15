@@ -10,8 +10,9 @@ type SendMessageReply struct {
 	EventID string `json:"event_id"` // A unique identifier for the event.
 }
 
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#post-matrix-client-r0-createroom
 type CreateRoomReply struct {
-	RoomID string `json:"room_id"`
+	RoomID string `json:"room_id"` // Information about the newly created room.
 }
 
 type GetLoginReply struct {
