@@ -21,7 +21,8 @@ type Client struct {
 	JoinedRooms map[string]*JoinedRoomC
 	Invites     map[string]*InviteC
 
-	InviteHandler InviteHandler
+	InviteHandler  InviteHandler
+	MessageHandler MessageHandler
 
 	serverURL  string
 	HTTPClient *http.Client

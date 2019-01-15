@@ -4,6 +4,7 @@ package matrixapi
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type JoinedRoomC struct {
@@ -16,6 +17,7 @@ type JoinedRoomC struct {
 	Members           map[string]*RoomMember
 	PowerLevels       MRoomPowerLevels
 	GuestAccess       GuestAccess
+	Topic             string
 }
 
 type InviteC struct {
@@ -157,6 +159,31 @@ func (client *Client) processRoomEvent(roomID string, event RoomEvent) error {
 		}
 
 		client.getOrCreateRoom(roomID).Name = mRoomName.Name
+	case "m.room.message":
+		var mRoomMessage MRoomMessage
+		err := json.Unmarshal(event.Content, &mRoomMessage)
+		if err != nil {
+			return err
+		}
+
+		incomingMessage := IncomingMessage{
+			RoomID:   roomID,
+			SenderID: event.Sender,
+			Type:     mRoomMessage.MessageType,
+			Body:     mRoomMessage.Body,
+			Time:     time.Unix(0, event.OriginServerTs*1000000)}
+
+		if client.MessageHandler != nil {
+			client.MessageHandler(incomingMessage)
+		}
+	case "m.room.topic":
+		var mRoomTopic MRoomTopic
+		err := json.Unmarshal(event.Content, &mRoomTopic)
+		if err != nil {
+			return err
+		}
+
+		client.getOrCreateRoom(roomID).Topic = mRoomTopic.Topic
 	}
 
 	return nil

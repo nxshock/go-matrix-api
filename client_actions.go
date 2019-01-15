@@ -19,10 +19,12 @@ func (client *Client) login(request *LoginRequest) (reply LoginReply, err error)
 	return joinedRoomReply.JoinedRooms, nil
 }*/
 
-func (client *Client) SendTextMessage(room string, text string) (eventID string, err error) {
-	path := fmt.Sprintf("/_matrix/client/r0/rooms/%s/send/m.room.message", room)
+// TODO: make universal {roomId}/send/{eventType}/{txnId}
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#id258
+func (client *Client) SendTextMessage(roomID string, text string) (eventID string, err error) {
+	path := fmt.Sprintf("/_matrix/client/r0/rooms/%s/send/m.room.message", roomID)
 
-	request := SendMessageRequest{
+	request := MRoomMessage{
 		MessageType: MessageTypeText,
 		Body:        text}
 
