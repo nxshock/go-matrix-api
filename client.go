@@ -124,9 +124,7 @@ func (client *Client) do(method, path string, request interface{}, reply interfa
 			return err
 		}
 
-		if apiError.ErrorCode != "" {
-			return fmt.Errorf("%s: %s", apiError.ErrorCode, apiError.Error)
-		}
+		return &apiError
 	}
 
 	return json.Unmarshal(b, &reply)
