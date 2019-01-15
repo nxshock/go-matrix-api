@@ -14,7 +14,8 @@ type LoginRequest struct {
 	InitialDeviceDisplayName string             `json:"initial_device_display_name"` // A display name to assign to the newly-created device. Ignored if device_id corresponds to a known device.
 }
 
-// https://matrix.org/docs/spec/client_server/r0.4.0.html#id264
+// CreateRoomRequest represents room creation request
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#post-matrix-client-r0-createroom
 type CreateRoomRequest struct {
 	Visibility    VisibilityType `json:"visibility,omitempty"`
 	RoomAliasName string         `json:"room_alias_name,omitempty"`
