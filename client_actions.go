@@ -19,9 +19,31 @@ import (
 func (client *Client) SendTextMessage(roomID string, text string) (eventID string, err error) {
 	path := fmt.Sprintf("/_matrix/client/r0/rooms/%s/send/m.room.message", roomID)
 
-	request := MRoomMessage{
+	request := SendMessageRequest{
 		MessageType: MessageTypeText,
 		Body:        text}
+
+	var reply SendMessageReply
+
+	err = client.do("POST", path, request, &reply)
+	if err != nil {
+		return "", err
+	}
+
+	return reply.EventID, nil
+}
+
+// TODO: make universal {roomId}/send/{eventType}/{txnId}
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#id258
+func (client *Client) SendTextReply(roomID string, messageID string, text string) (eventID string, err error) {
+	path := fmt.Sprintf("/_matrix/client/r0/rooms/%s/send/m.room.message", roomID)
+
+	request := SendMessageRequest{
+		MessageType: MessageTypeText,
+		Body:        text,
+		RelatesTo: MRelatesTo{
+			InReplyTo: MInReplyTo{
+				EventID: messageID}}}
 
 	var reply SendMessageReply
 

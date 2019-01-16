@@ -13,4 +13,5 @@ type IncomingMessage struct {
 	Type     MessageType
 	Body     string
 	Time     time.Time
+	EventID  string
 }

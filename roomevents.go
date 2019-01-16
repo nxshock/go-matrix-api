@@ -171,7 +171,8 @@ func (client *Client) processRoomEvent(roomID string, event RoomEvent) error {
 			SenderID: event.Sender,
 			Type:     mRoomMessage.MessageType,
 			Body:     mRoomMessage.Body,
-			Time:     time.Unix(0, event.OriginServerTs*1000000)}
+			Time:     time.Unix(0, event.OriginServerTs*1000000),
+			EventID:  event.EventID}
 
 		if client.MessageHandler != nil && incomingMessage.SenderID != client.UserID {
 			client.MessageHandler(incomingMessage)

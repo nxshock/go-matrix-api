@@ -39,3 +39,9 @@ type CreateRoomRequest struct {
 	IsDirect     bool         `json:"is_direct,omitempty"`
 	// PowerLevelContentOverride `json:"power_level_content_override"`
 }
+
+type SendMessageRequest struct {
+	Body        string      `json:"body"`    // Required. The textual representation of this message.
+	MessageType MessageType `json:"msgtype"` // Required. The type of message, e.g. m.image, m.text
+	RelatesTo   MRelatesTo  `json:"m.relates_to,omitempty"`
+}
