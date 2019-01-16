@@ -173,7 +173,7 @@ func (client *Client) processRoomEvent(roomID string, event RoomEvent) error {
 			Body:     mRoomMessage.Body,
 			Time:     time.Unix(0, event.OriginServerTs*1000000)}
 
-		if client.MessageHandler != nil {
+		if client.MessageHandler != nil && incomingMessage.SenderID != client.UserID {
 			client.MessageHandler(incomingMessage)
 		}
 	case "m.room.topic":
