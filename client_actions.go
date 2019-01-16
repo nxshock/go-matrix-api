@@ -4,11 +4,6 @@ import (
 	"fmt"
 )
 
-func (client *Client) login(request *LoginRequest) (reply LoginReply, err error) {
-	err = client.do("POST", "/_matrix/client/r0/login", request, &reply)
-	return
-}
-
 /*func (client *Client) JoinedRooms() ([]string, error) {
 	var joinedRoomReply JoinedRoomReply
 	err := client.get("/_matrix/client/r0/joined_rooms", struct{}{}, &joinedRoomReply)

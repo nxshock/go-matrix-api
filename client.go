@@ -47,17 +47,23 @@ func NewClientWithPassword(host string, user, password string) (*Client, error) 
 		Invites:     make(map[string]*InviteC),
 		HTTPClient:  new(http.Client)}
 
-	reply, err := client.login(&LoginRequest{
-		Type:     AuthenticationTypePassword,
-		User:     user,
-		Password: password})
+	var loginReply LoginReply
+	loginRequest := &LoginRequest{
+		Type: AuthenticationTypePassword,
+		Identifier: UserIdentifier{
+			Type: IdentifierTypeUser,
+			User: user},
+		DeviceID: "go-matrix-api",
+		Password: password}
+
+	err = client.do("POST", "/_matrix/client/r0/login", loginRequest, &loginReply)
 	if err != nil {
 		return nil, err
 	}
 
-	client.AccessToken = reply.AccessToken
-	client.HomeServer = reply.HomeServer
-	client.UserID = reply.UserID
+	client.AccessToken = loginReply.AccessToken
+	client.HomeServer = loginReply.HomeServer
+	client.UserID = loginReply.UserID
 
 	return client, nil
 }
