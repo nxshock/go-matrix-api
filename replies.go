@@ -45,3 +45,8 @@ type RoomsSyncReply struct {
 type JoinRoomReply struct {
 	RoomID string `json:"room_id"` // The joined room ID must be returned in the room_id field.
 }
+
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#get-matrix-client-versions
+type VersionsReply struct {
+	Versions []string `json:"versions"` // The supported versions.
+}

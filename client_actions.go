@@ -111,3 +111,17 @@ func (client *Client) JoinRoom(roomID string) error {
 
 	return nil
 }
+
+// Versions returns versions of the specification supported by the server
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#get-well-known-matrix-client
+func (client *Client) Versions() ([]string, error) {
+	const path = "/_matrix/client/versions"
+
+	var reply VersionsReply
+	err := client.do("GET", path, struct{}{}, &reply)
+	if err != nil {
+		return nil, err
+	}
+
+	return reply.Versions, nil
+}
