@@ -3,7 +3,7 @@ d - deprecated
 x - not planned
 
 - [ ]    2   API Standards
-- [ ]        2.1   GET /_matrix/client/versions
+- [v]        2.1   GET /_matrix/client/versions
 - [ ]    3   Web Browser Clients
 - [ ]    4   Server Discovery
 - [ ]        4.1   Well-known URI
