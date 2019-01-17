@@ -98,12 +98,16 @@ func (client *Client) do(method, path string, request interface{}, reply interfa
 		}
 		u.RawQuery = val.Encode()
 
-		b, err := json.Marshal(request)
-		if err != nil {
-			return err
+		var requestReader io.Reader
+		if request != nil {
+			b, err := json.Marshal(request)
+			if err != nil {
+				return err
+			}
+			requestReader = bytes.NewReader(b)
 		}
 
-		req, err = http.NewRequest(method, u.String(), bytes.NewReader(b))
+		req, err = http.NewRequest(method, u.String(), requestReader)
 		if err != nil {
 			return err
 		}
@@ -131,6 +135,10 @@ func (client *Client) do(method, path string, request interface{}, reply interfa
 		}
 
 		return &apiError
+	}
+
+	if reply == nil {
+		return nil
 	}
 
 	return json.Unmarshal(b, &reply)
