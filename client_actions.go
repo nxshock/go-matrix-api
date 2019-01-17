@@ -154,3 +154,17 @@ func (client *Client) LogoutAll() error {
 
 	return nil
 }
+
+// TODO: return cached client.UserID?
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#get-matrix-client-r0-account-whoami
+func (client *Client) WhoAmI() (userID string, err error) {
+	const path = "/_matrix/client/r0/account/whoami"
+
+	var whoAmIReply WhoAmIReply
+	err = client.do("GET", path, nil, &whoAmIReply)
+	if err != nil {
+		return "", err
+	}
+
+	return whoAmIReply.UserID, nil
+}

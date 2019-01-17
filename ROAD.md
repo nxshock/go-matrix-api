@@ -51,7 +51,7 @@ x - not planned
 - [ ]            5.6.4   POST /_matrix/client/r0/account/3pid/email/requestToken
 - [ ]            5.6.5   POST /_matrix/client/r0/account/3pid/msisdn/requestToken
 - [ ]        5.7   Current account information
-- [ ]            5.7.1   GET /_matrix/client/r0/account/whoami
+- [v]            5.7.1   GET /_matrix/client/r0/account/whoami
 - [ ]    6   Pagination
 - [ ]    7   Filtering
 - [ ]        7.1   POST /_matrix/client/r0/user/{userId}/filter
