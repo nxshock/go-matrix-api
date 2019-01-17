@@ -142,3 +142,15 @@ func (client *Client) Versions() ([]string, error) {
 
 	return reply.Versions, nil
 }
+
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#post-matrix-client-r0-logout-all
+func (client *Client) LogoutAll() error {
+	const path = "/_matrix/client/r0/logout/all"
+
+	err := client.do("POST", path, nil, nil)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

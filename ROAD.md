@@ -32,7 +32,7 @@ x - not planned
 - [v]            5.4.1   GET /_matrix/client/r0/login
 - [v]            5.4.2   POST /_matrix/client/r0/login
 - [v]            5.4.3   POST /_matrix/client/r0/logout
-- [ ]            5.4.4   POST /_matrix/client/r0/logout/all
+- [v]            5.4.4   POST /_matrix/client/r0/logout/all
 - [ ]            5.4.5   Login Fallback
 - [ ]        5.5   Account registration and management
 - [ ]            5.5.1   POST /_matrix/client/r0/register
