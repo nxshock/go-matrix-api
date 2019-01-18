@@ -4,15 +4,32 @@ import (
 	"fmt"
 )
 
-/*func (client *Client) JoinedRooms() ([]string, error) {
-	var joinedRoomReply JoinedRoomReply
-	err := client.get("/_matrix/client/r0/joined_rooms", struct{}{}, &joinedRoomReply)
-	if err != nil {
-		return nil, err
+// JoinedRooms returns a list of the user's current rooms.
+// If fromCache is true then local cache will be used.
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#get-matrix-client-r0-joined-rooms
+func (client *Client) JoinedRooms(fromCache bool) (map[string]*JoinedRoomC, error) {
+	const path = "/_matrix/client/r0/joined_rooms"
+
+	if !fromCache { // Update current room list from server
+		var joinedRoomReply JoinedRoomReply
+		err := client.do("GET", path, nil, &joinedRoomReply)
+		if err != nil {
+			return nil, err
+		}
+
+		updatedJoinedRooms := make(map[string]*JoinedRoomC)
+		for _, roomID := range joinedRoomReply.JoinedRooms {
+			if _, exists := client.joinedRooms[roomID]; exists {
+				updatedJoinedRooms[roomID] = client.joinedRooms[roomID]
+			} else {
+				updatedJoinedRooms[roomID] = &JoinedRoomC{}
+			}
+		}
+		client.joinedRooms = updatedJoinedRooms
 	}
 
-	return joinedRoomReply.JoinedRooms, nil
-}*/
+	return client.joinedRooms, nil
+}
 
 // TODO: make universal {roomId}/send/{eventType}/{txnId}
 // https://matrix.org/docs/spec/client_server/r0.4.0.html#id258

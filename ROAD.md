@@ -90,7 +90,7 @@ x - not planned
 - [ ]            9.2.3   DELETE /_matrix/client/r0/directory/room/{roomAlias}
 - [ ]        9.3   Permissions
 - [ ]        9.4   Room membership
-- [?]            9.4.1   GET /_matrix/client/r0/joined_rooms
+- [v]            9.4.1   GET /_matrix/client/r0/joined_rooms
 - [ ]            9.4.2   Joining rooms
 - [ ]                9.4.2.1   POST /_matrix/client/r0/rooms/{roomId}/invite
 - [ ]                9.4.2.2   POST /_matrix/client/r0/rooms/{roomId}/join

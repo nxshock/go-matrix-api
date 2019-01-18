@@ -18,7 +18,7 @@ type Client struct {
 	HomeServer  string
 	UserID      string
 
-	JoinedRooms map[string]*JoinedRoomC
+	joinedRooms map[string]*JoinedRoomC
 	Invites     map[string]*InviteC
 
 	InviteHandler  InviteHandler
@@ -43,7 +43,7 @@ func NewClientWithPassword(host string, user, password string) (*Client, error) 
 
 	client := &Client{
 		serverURL:   u2.String(),
-		JoinedRooms: make(map[string]*JoinedRoomC),
+		joinedRooms: make(map[string]*JoinedRoomC),
 		Invites:     make(map[string]*InviteC),
 		HTTPClient:  new(http.Client)}
 
@@ -146,14 +146,14 @@ func (client *Client) do(method, path string, request interface{}, reply interfa
 
 func (client *Client) getOrCreateRoom(roomID string) *JoinedRoomC {
 	if client.JoinedRooms == nil {
-		client.JoinedRooms = make(map[string]*JoinedRoomC)
+		client.joinedRooms = make(map[string]*JoinedRoomC)
 	}
 
-	if client.JoinedRooms[roomID] == nil {
-		client.JoinedRooms[roomID] = new(JoinedRoomC)
+	if client.joinedRooms[roomID] == nil {
+		client.joinedRooms[roomID] = new(JoinedRoomC)
 	}
 
-	return client.JoinedRooms[roomID]
+	return client.joinedRooms[roomID]
 }
 
 func (client *Client) logln(a ...interface{}) {
