@@ -39,7 +39,8 @@ func (joinedRoomC *JoinedRoomC) getOrCreateMember(memberID string) *RoomMember {
 }
 
 type RoomMember struct {
-	Membership  string
+	UserID      string
+	Membership  Membership
 	DisplayName string
 	AvatarURL   string
 	IsDirect    bool
@@ -72,10 +73,10 @@ type MRoomJoinRules struct {
 // https://matrix.org/docs/spec/client_server/r0.4.0.html#id312
 type MRoomMember struct {
 	// TODO: уточнить структуру
-	Membership  string `json:"membership"`
-	DisplayName string `json:"displayname"`
-	AvatarURL   string `json:"avatar_url"`
-	IsDirect    bool   `json:"is_direct"`
+	Membership  Membership `json:"membership"`
+	DisplayName string     `json:"displayname"`
+	AvatarURL   string     `json:"avatar_url"`
+	IsDirect    bool       `json:"is_direct"`
 }
 
 // https://matrix.org/docs/spec/client_server/r0.4.0.html#m-room-power-levels

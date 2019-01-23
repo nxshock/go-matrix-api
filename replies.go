@@ -55,3 +55,8 @@ type VersionsReply struct {
 type WhoAmIReply struct {
 	UserID string `json:"user_id"` // Required. The user id that owns the access token.
 }
+
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#get-matrix-client-r0-rooms-roomid-members
+type MembersReply struct {
+	Chunk []MemberEvent `json:"chunk"`
+}

@@ -1,9 +1,33 @@
 package matrixapi
 
-// Invite3pid represents third party IDs to invite into the room
-// https://matrix.org/docs/spec/client_server/r0.4.0.html#post-matrix-client-r0-createroom
-type Invite3pid struct {
-	IDServer string `json:"id_server"` // Required. The hostname+port of the identity server which should be used for third party identifier lookups.
-	Medium   string `json:"medium"`    // Required. The kind of address being passed in the address field, for example email.
-	Address  string `json:"address"`   // Required. The invitee's third party identifier.
+import (
+	"fmt"
+)
+
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#get-matrix-client-r0-rooms-roomid-members
+func (client *Client) RoomMembers(roomID string, fromCache bool) (map[string]*RoomMember, error) {
+	var path = fmt.Sprintf("/_matrix/client/r0/rooms/%s/members", roomID)
+
+	var membersReply MembersReply
+	err := client.do("GET", path, nil, &membersReply)
+	if err != nil {
+		return nil, err
+	}
+
+	if !fromCache {
+		room := client.getOrCreateRoom(roomID)
+		for _, memberEvent := range membersReply.Chunk {
+			member := room.Members[memberEvent.Sender]
+			if member == nil {
+				member = new(RoomMember)
+				room.Members[memberEvent.Sender] = member // TODO: panic: assignment to entry in nil map
+			}
+			member.AvatarURL = memberEvent.Content.AvatarURL
+			member.DisplayName = memberEvent.Content.DisplayName
+			member.IsDirect = memberEvent.Content.IsDirect
+			member.Membership = memberEvent.Content.Membership
+		}
+	}
+
+	return client.joinedRooms[roomID].Members, nil
 }

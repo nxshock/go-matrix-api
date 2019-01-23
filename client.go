@@ -145,10 +145,6 @@ func (client *Client) do(method, path string, request interface{}, reply interfa
 }
 
 func (client *Client) getOrCreateRoom(roomID string) *JoinedRoomC {
-	if client.JoinedRooms == nil {
-		client.joinedRooms = make(map[string]*JoinedRoomC)
-	}
-
 	if client.joinedRooms[roomID] == nil {
 		client.joinedRooms[roomID] = new(JoinedRoomC)
 	}
